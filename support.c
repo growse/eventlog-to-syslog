@@ -102,14 +102,12 @@ char * GetTimeStamp()
 {
 	time_t t = time(NULL);
 	struct tm stm;
-	char result[16];
-	static char timestamp[] = "Mmm dd hh:mm:ss";
+	char result[32];
+	static char timestamp[] = "YYYY-mm-DDTHH:MM:ssz";
 
 	/* Format timestamp string */ 
-	if (localtime_s(&stm, &t) == 0) {
-		strftime(result, sizeof(result), "%b %d %H:%M:%S", &stm); 
-		if (result[4] == '0') /* Replace leading zero with a space on */ 
-			result[4] = ' ';  /* single digit days so we comply with the RFC */ 
+	if (gmtime_s(&stm, &t) == 0) {
+		strftime(result, sizeof(result), "%Y-%m-%dT%H:%M:%SZ", &stm); 
 	} else 
 		result[0] = '\0'; 
 	strncpy_s(timestamp, sizeof(timestamp), result, _TRUNCATE);

@@ -55,6 +55,7 @@
 */
 
 /* Include files */
+
 #include "main.h"
 #include "eventlog.h"
 #include "log.h"
@@ -431,18 +432,16 @@ char * EventlogNext(EventList ignore_list[MAX_IGNORED_EVENTS], int log, int * le
 /* Format Timestamp from EventLog */
 char * TimeToString(DWORD dw)
 {
+	
 	time_t tt;
 	struct tm stm;
-	char result[16];
-	static char * formatted_result = "Mmm dd hh:mm:ss";
+	char result[32];
+	static char * formatted_result = "YYYY-mm-DDTHH:MM:ssz";
 
 	tt = (time_t) dw;
-	
 	/* Format timestamp string */
-	if (localtime_s(&stm, &tt) == 0) {
-		strftime(result, sizeof(result), "%b %d %H:%M:%S", &stm);
-		if (result[4] == '0') /* Replace leading zero with a space for */
-			result[4] = ' ';  /* single digit days so we comply with the RFC */
+	if (gmtime_s(&stm, &tt) == 0) {
+		strftime(result, sizeof(result), "%Y-%m-%dT%H:%M:%SZ", &stm);
 	} else
 		result[0] = '\0';
 

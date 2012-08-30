@@ -494,8 +494,8 @@ WCHAR * WinEventTimeToString(ULONGLONG ulongTime)
 	FILETIME fTime, lfTime;
 	ULARGE_INTEGER ulargeTime;
 	struct tm tm_struct;
-	WCHAR result[17] = L"";
-	static WCHAR * formatted_result = L"Mmm dd hh:mm:ss";
+	WCHAR result[32] = L"";
+	static WCHAR * formatted_result = L"YYYY-mm-DDTHH:MM:ssz";
 
 	memset(&tm_struct, 0, sizeof(tm_struct));
 
@@ -526,11 +526,9 @@ WCHAR * WinEventTimeToString(ULONGLONG ulongTime)
 	tm_struct.tm_sec  = sysTime.wSecond;
 	
 	/* Format timestamp string */
-	wcsftime(result, COUNT_OF(result), L"%b %d %H:%M:%S", &tm_struct);
-	if (result[4] == L'0') /* Replace leading zero with a space for */
-		result[4] = L' ';  /* single digit days so we comply with the RFC */
+	wcsftime(result, COUNT_OF(result), L"%Y-%m-%dT%H:%M:%SZ", &tm_struct);
 
-	wcsncpy_s(formatted_result, COUNT_OF(L"Mmm dd hh:mm:ss"), result, _TRUNCATE);
+	wcsncpy_s(formatted_result, COUNT_OF(L"YYYY-mm-DDTHH:MM:ssz"), result, _TRUNCATE);
 	
 	return formatted_result;
 }
