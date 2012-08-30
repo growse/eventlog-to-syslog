@@ -507,11 +507,11 @@ WCHAR * WinEventTimeToString(ULONGLONG ulongTime)
 
 	/* Adjust time value to reflect current timezone */
 	/* then convert to a SYSTEMTIME */
-	if (FileTimeToLocalFileTime(&fTime, &lfTime) == 0) {
-		Log(LOG_ERROR|LOG_SYS,"Error formatting event time to local time");
-		return NULL;
-	}
-	if (FileTimeToSystemTime(&lfTime, &sysTime) == 0) {
+	//if (FileTimeToLocalFileTime(&fTime, &lfTime) == 0) {
+//		Log(LOG_ERROR|LOG_SYS,"Error formatting event time to local time");
+		//return NULL;
+	//}
+	if (FileTimeToSystemTime(&fTime, &sysTime) == 0) {
 		Log(LOG_ERROR|LOG_SYS,"Error formatting event time to system time");
 		return NULL;
 	}

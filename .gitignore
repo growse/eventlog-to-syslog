@@ -10,3 +10,17 @@
 *.lai
 *.la
 *.a
+
+
+*.obj
+Release/
+_Resharper*
+*.suo
+
+*.exe
+*.dll
+*.map
+*.pdb
+*.bin
+dllmsg.rc
+dllmsg.h
